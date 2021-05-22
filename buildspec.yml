@@ -4,14 +4,11 @@ phases:
   pre_build:
     commands:
       - wget https://github.com/aws/aws-sam-cli/releases/latest/download/aws-sam-cli-linux-x86_64.zip
-      - unzip aws-sam-cli-linux-x86_64.zip -d sam-installation
+      - unzip -q aws-sam-cli-linux-x86_64.zip -d sam-installation
       - ./sam-installation/install
       - sam --version
   build:
     commands:
       - echo 'Building...'
       - sam build
-      - sam deploy --capabilities CAPABILITY_IAM --region ap-northeast-1
-  post_build:
-    commands:
-      - aws cloudformation describe-stacks --stack-name "stack-cicd-sam-20210519" --query 'Stacks[]'
+      - sam deploy --stack-name cicd-sam-0522 --s3-bucket cicd-sam-20210522 --capabilities CAPABILITY_IAM --region ap-northeast-1
