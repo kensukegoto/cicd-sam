@@ -11,4 +11,4 @@ phases:
     commands:
       - echo 'Building...'
       - sam build
-      - sam deploy --stack-name cicd-sam--${STAGE} --s3-bucket cicd-sam--${STAGE} --capabilities CAPABILITY_IAM --region ap-northeast-1
+      - sam deploy --stack-name cicd-sam--${STAGE} --s3-bucket cicd-sam--${STAGE} --capabilities CAPABILITY_IAM --region ap-northeast-1 --parameter-overrides Env=prd

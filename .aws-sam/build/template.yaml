@@ -8,6 +8,13 @@ Description: 'cicd-sam
 Globals:
   Function:
     Timeout: 3
+Parameters:
+  Env:
+    Type: String
+    AllowedValues:
+    - prd
+    - stg
+    Default: stg
 Resources:
   HelloWorldFunction:
     Type: AWS::Serverless::Function
@@ -15,6 +22,11 @@ Resources:
       CodeUri: HelloWorldFunction
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
+      FunctionName:
+        Fn::Join:
+        - ''
+        - - cicd-sam-hello-world
+          - Ref: Env
       Events:
         HelloWorld:
           Type: Api

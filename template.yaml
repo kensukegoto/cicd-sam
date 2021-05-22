@@ -9,6 +9,13 @@ Description: >
 Globals:
   Function:
     Timeout: 3
+Parameters:
+  Env: # prod: 本番環境、stg: 検品環境
+    Type: String
+    AllowedValues:
+      - prd
+      - stg
+    Default: stg
     
 Resources:
   HelloWorldFunction:
@@ -17,6 +24,12 @@ Resources:
       CodeUri: hello-world/
       Handler: app.lambdaHandler
       Runtime: nodejs12.x
+      FunctionName: 
+        !Join
+          - ''
+          - - 'cicd-sam-hello-world'
+            - '-'
+            - !Ref Env
       Events:
         HelloWorld:
           Type: Api # More info about API Event Source: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#api
